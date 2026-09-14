@@ -16,8 +16,9 @@ Scanner sc = new Scanner(System.in);
 		System.out.println("How old are you?");
 		 int age = sc.nextInt();
 		 System.out.println("What month is your Birthday?");
-		 int month = sc.nextInt();
-		 int year = sc.nextInt();
+		 String month = sc.nextLine();
+		 System.out.println("What year were you born");
+		 String year = sc.nextLine();
 		 
 	}
 }
