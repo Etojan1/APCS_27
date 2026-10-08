@@ -8,8 +8,16 @@ import java.util.Random;
 
 class starter {
 	public static void main(String args[]) {
-		// the string "I love to learn coding remotely." will appear in
-		// the command window when you compile and run this program.
-		System.out.print("I love to learn coding remotely."); 
-	}
+		Scanner sc = new Scanner(System.in);
+	System.out.println("Would you like to be a Wizard,Warrior, Rogue ");
+	String choice = sc.nextLine();
+	if(choice.equalsIgnoreCase("Wizard")){
+		System.out.println("You have chosen the Wizard! Excelsior!");
+}else if (choice.equalsIgnoreCase("Warrior")){
+	System.out.println("You have chosen the Warrior! For Honor!");
+}else if (choice.equalsIgnoreCase("Rogue")){
+	System.out.println("You have chosen the Rogue! How cunning!");
+}else
+	System.out.println("You have decided not to choose a role. Return program");
+}
 }
