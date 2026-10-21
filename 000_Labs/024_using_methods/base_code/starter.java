@@ -11,26 +11,69 @@ import java.time.format.*;
 class starter {
 	static long startTime = 0;
 	static ArrayList<String> arr = new ArrayList<String>();
-
 	public static void main(String args[]) throws InterruptedException {
-		// Write your code here!
+	Scanner sc = new Scanner(System.in);
+int choice = 0;
+System.out.println("Welcome to Type Quest");
+System.out.println("It is currently " + getTime());
+System.out.println("Type the sentence as fast as possible!");
+while (choice != 3) {
+    System.out.println();
+    System.out.println("1 - Play random");
+    System.out.println("2 - Play set");
+    System.out.println("3 - Quit");
+    choice = sc.nextInt();
+    sc.nextLine();
+    String sentence = "";
+    if (choice == 1) {
+        sentence = getSentence();
+    } else if (choice == 2) {
+        System.out.println("Choose a sentence number from 0 to 99:");
+        int number = sc.nextInt();
+        sc.nextLine();
+
+        while (number < 0 || number > 99) {
+            System.out.println("Enter a number from 0 to 99:");
+            number = sc.nextInt();
+            sc.nextLine();
+        }
+        sentence = getSentence(number);
+    }
+    if (choice == 1 || choice == 2) {
+        System.out.println("Your sentence is:");
+        System.out.println(sentence);
+        countdown();
+        startTimer();
+        String typed = sc.nextLine();
+        double time = endTimer();
+        int errors = compareSentences(sentence, typed);
+        int letters = lettersInSentence(sentence);
+        int words = wordsInSentence(sentence);
+        double lettersPerMinute = letters / time * 60;
+        double wordsPerMinute = words / time * 60;
+        System.out.println("Time: " + time + " seconds");
+        System.out.println("Errors: " + errors + " / " + letters);
+        System.out.println("Letters per minute: " + lettersPerMinute);
+        System.out.println("Words per minute: " + wordsPerMinute);
+    } else if (choice != 3) {
+        System.out.println("Please choose 1, 2, or 3.");
+    }
+}
+System.out.println("Thanks for playing");
 
 		
 	}
 
-	// This method returns the local current time as a String
 	public static String getTime(){
 		LocalTime now = LocalTime.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("hh:mm:ss a");
         return now.format(format);
 	}
 
-	// This method starts a clock that can be used throughout the program
 	public static void startTimer(){
 		startTime = System.nanoTime();
 	}
 
-	// This method stops the timer clock and returns a double of the seconds and milliseconds of the stopwatch
 	public static double endTimer() throws InterruptedException{
 		long endTime = System.nanoTime();
 		long timeSeconds = ((endTime - startTime)/1000000);
@@ -38,7 +81,6 @@ class starter {
 		return decSeconds;
 	}
 
-	// This method does a 3 second countdown and prints it to the terminal
 	public static void countdown(){
 		System.out.println("Starting countdown...");
 		for (int i = 0; i < 3; i++) {
@@ -53,8 +95,7 @@ class starter {
 		System.out.println("Go!");
 	}
 
-	// This method sets up a list of sentences to be called from. 
-	// This should only be called once prior to getting sentences.
+	
 	private static void populateArrayList(){
 		File f = new File("sentences.txt");
 		try(Scanner fsc = new Scanner(f)){
@@ -67,25 +108,25 @@ class starter {
 		}
 	}
 
-	// This chooses 1 of the 100 sentences in the list to return.
+	
 	public static String getSentence(){
 		populateArrayList();
 		int rand = (int)(Math.random()*100);
 		return arr.get(rand);
 	}
 
-	// This returns the same sentence for the same integer given.
+	
 	public static String getSentence(int index){
 		populateArrayList();
 		return arr.get(index%100);
 	}
 
-	//  This returns the number of letters, spaces, and punctuations in a sentence.
+	
 	public static int lettersInSentence(String sent){
 		return sent.length();
 	}
 	
-	// This returns the number of words in a sentence
+	
 	public static int wordsInSentence(String sent){
 		int spaceCount = 0;
 		while(sent.indexOf(" ") > -1){
@@ -95,7 +136,6 @@ class starter {
 		return ++spaceCount;
 	}
 
-	// This method does a letter by letter comparison of each word and returns the number of errors.
 	public static int compareSentences(String given, String typed){
 		int errors = 0;
 		while(given.length() > 0 && typed.length() > 0){
